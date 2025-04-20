@@ -1,3 +1,4 @@
+/*
 package com.formula1.capbank.services;
 
 import com.formula1.capbank.dtos.Register.RegisterRequest;
@@ -30,3 +31,4 @@ public class AuthService implements IAuthService {
         return modelMapper.map(savedUser, RegisterResponse.class);
     }
 }
+*/

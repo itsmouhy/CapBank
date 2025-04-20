@@ -1,8 +1,8 @@
 package com.formula1.capbank.dtos.Transaction;
 
 public record TransferRequestDTO (
-    Long compteSource,
-    Long compteDest,
+    String numeroCompteSource,
+    String numeroCompteDest,
     Double montant
 ) {
 

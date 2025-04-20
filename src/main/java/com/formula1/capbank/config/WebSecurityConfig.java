@@ -1,3 +1,4 @@
+/*
 package com.formula1.capbank.config;
 
 import com.formula1.capbank.security.JwtAuthenticationEntryPoint;
@@ -79,3 +80,4 @@ public class WebSecurityConfig {
         return http.build();
     }
 }
+*/

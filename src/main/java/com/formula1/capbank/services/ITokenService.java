@@ -1,4 +1,4 @@
-package com.formula1.capbank.services;
+/*package com.formula1.capbank.services;
 
 import com.formula1.capbank.exceptions.InvalidTokenException;
 import io.jsonwebtoken.Claims;
@@ -22,4 +22,4 @@ public interface ITokenService extends UserDetailsService {
 
     public Boolean isTokenValid(String token, UserDetails userDetails) throws InvalidTokenException;
 
-}
+}*/

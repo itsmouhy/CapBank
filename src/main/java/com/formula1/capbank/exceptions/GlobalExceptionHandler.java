@@ -1,12 +1,14 @@
 package com.formula1.capbank.exceptions;
 
+/*
 import io.jsonwebtoken.ExpiredJwtException;
+*/
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AccountStatusException;
-import org.springframework.security.authentication.BadCredentialsException;
+/*import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;*/
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,7 +28,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public ProblemDetail handleSecurityExceptions(Exception exception) {
         ProblemDetail errorDetail = null;
         exception.printStackTrace();
@@ -67,6 +69,6 @@ public class GlobalExceptionHandler {
         }
 
         return errorDetail;
-    }
+    }*/
 
 }

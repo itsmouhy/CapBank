@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface CompteRepository extends JpaRepository<Compte,Long> {
     Optional<Compte> findByRib(Long rib);
-    Compte findByNumeroCompte(String numeroCompte);
+    Optional<Compte> findByNumeroCompte(String numeroCompte);
+    Boolean existsByNumeroCompte(String numeroCompte);
 }

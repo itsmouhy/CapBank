@@ -1,9 +1,10 @@
 package com.formula1.capbank.dtos.Transaction;
 
 public record DebitDTO (
-        Long id,
+        String numeroCompte,                // Numero du compte a debiter
         Double montant,
-        String description
+        String description,
+        String numeroCompteRecipient        // Numero de compte beneficiaire
 ) {
 
 }

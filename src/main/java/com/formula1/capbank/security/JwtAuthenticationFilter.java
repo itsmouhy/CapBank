@@ -1,6 +1,6 @@
 package com.formula1.capbank.security;
 
-import com.formula1.capbank.exceptions.InvalidTokenException;
+/*import com.formula1.capbank.exceptions.InvalidTokenException;
 import com.formula1.capbank.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
+import java.io.IOException;*/
 
 /**
  * JwtAuthenticationFilter is responsible for filtering incoming HTTP requests to
@@ -26,6 +26,7 @@ import java.io.IOException;
  * expired, appropriate log messages are generated. This filter is used for
  * securing endpoints that require JWT authentication.
  */
+/*
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -87,3 +88,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+*/

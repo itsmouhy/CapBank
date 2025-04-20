@@ -6,6 +6,7 @@ import com.formula1.capbank.dtos.Compte.NouveauCompterequest;
 import com.formula1.capbank.dtos.Transaction.CreditDTO;
 import com.formula1.capbank.dtos.Transaction.DebitDTO;
 import com.formula1.capbank.dtos.Transaction.TransferRequestDTO;
+import com.formula1.capbank.entities.Compte;
 import com.formula1.capbank.exceptions.CompteNotFoundException;
 import com.formula1.capbank.exceptions.SoldeNotSufficientException;
 import com.formula1.capbank.services.ICompteService;
@@ -45,7 +46,7 @@ public class CompteController {
 
     @PostMapping("/debit")
     public ResponseEntity<DebitDTO> debit(@RequestBody DebitDTO debitDTO) throws CompteNotFoundException, SoldeNotSufficientException {
-        compteService.debit(debitDTO.id(), debitDTO.montant(), debitDTO.description());
+        compteService.debit(debitDTO.numeroCompte(), debitDTO.montant(), debitDTO.description(), debitDTO.numeroCompteRecipient());
         return ResponseEntity.ok(debitDTO);
     }
 
@@ -59,8 +60,8 @@ public class CompteController {
      */
 
     @PostMapping("/credit")
-    public ResponseEntity<CreditDTO> credit(@RequestBody CreditDTO creditDto) throws CompteNotFoundException, SoldeNotSufficientException {
-        compteService.credit(creditDto.id(), creditDto.montant(), creditDto.description());
+    public ResponseEntity<CreditDTO> credit(@RequestBody CreditDTO creditDto) throws CompteNotFoundException {
+        compteService.credit(creditDto.numeroCompte(), creditDto.montant(), creditDto.description(), creditDto.numeroCompteRecipient());
         return ResponseEntity.ok(creditDto);
     }
 
@@ -74,8 +75,8 @@ public class CompteController {
 
     @PostMapping("/transfer")
     public ResponseEntity<Void> transfer(@RequestBody TransferRequestDTO transferRequestDTO) throws CompteNotFoundException, SoldeNotSufficientException {
-        compteService.transfer(transferRequestDTO.compteSource(),
-                transferRequestDTO.compteDest(),
+        compteService.transfer(transferRequestDTO.numeroCompteSource(),
+                transferRequestDTO.numeroCompteDest(),
                 transferRequestDTO.montant());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

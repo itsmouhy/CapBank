@@ -19,35 +19,37 @@ public interface ICompteService {
     /**
      * Effectue un débit sur le compte spécifié.
      *
-     * @param compteId
+     * @param numeroCompte
      * @param montant
      * @param description
+     * @param recipientNum
      * @throws CompteNotFoundException
      * @throws SoldeNotSufficientException
      */
-    void debit(Long compteId, Double montant, String description) throws CompteNotFoundException, SoldeNotSufficientException;
+    void debit(String numeroCompte, Double montant, String description, String recipientNum) throws CompteNotFoundException, SoldeNotSufficientException;
 
     /**
      * Effectue un crédit sur le compte spécifié
      *
-     * @param compteId
+     * @param numeroCompte
      * @param montant
      * @param description
+     * @param recipientNum
      * @throws CompteNotFoundException
      * @throws SoldeNotSufficientException
      */
-    void credit(Long compteId, Double montant, String description) throws CompteNotFoundException;
+    void credit(String numeroCompte, Double montant, String description, String recipientNum) throws CompteNotFoundException;
 
     /**
      * Effectue un transfert sur le compte spécifié
      *
-     * @param compteIdSource
-     * @param compteIdDest
+     * @param numeroCompteSource
+     * @param numeroCompteDest
      * @param montant
      * @throws CompteNotFoundException
      * @throws SoldeNotSufficientException
      */
-    void transfer(Long compteIdSource, Long compteIdDest, Double montant) throws CompteNotFoundException, SoldeNotSufficientException;
+    void transfer(String numeroCompteSource, String numeroCompteDest, Double montant) throws CompteNotFoundException, SoldeNotSufficientException;
 
     /**
      * Récupère l'historique des transactions pour un compte donné, avec pagination.

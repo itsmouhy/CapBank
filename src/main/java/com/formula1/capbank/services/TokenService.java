@@ -1,4 +1,4 @@
-package com.formula1.capbank.services;
+/*package com.formula1.capbank.services;
 
 import com.formula1.capbank.entities.Utilisateur;
 import com.formula1.capbank.exceptions.InvalidTokenException;
@@ -108,4 +108,4 @@ public class TokenService implements ITokenService {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-}
+}*/

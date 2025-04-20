@@ -7,6 +7,7 @@ import com.formula1.capbank.dtos.Transaction.TransactionDTO;
 import com.formula1.capbank.entities.Compte;
 import com.formula1.capbank.entities.Transactions;
 import com.formula1.capbank.entities.Utilisateur;
+import com.formula1.capbank.enums.TransactionStatus;
 import com.formula1.capbank.enums.TransactionType;
 import com.formula1.capbank.exceptions.CompteNotFoundException;
 import com.formula1.capbank.exceptions.SoldeNotSufficientException;
@@ -32,9 +33,9 @@ import java.util.stream.Collectors;
 @Transactional
 @Slf4j
 public class CompteService implements ICompteService{
-    private CompteRepository compteRepository;
-    private  CompteMapper compteMapper;
-    private UtilisateurRepository utilisateurRepo;
+    private final CompteRepository compteRepository;
+    private final CompteMapper compteMapper;
+    private final UtilisateurRepository utilisateurRepo;
     private final TransactionsRepository transactionsRepository;
     private final TransactionMapper transactionMapper;
 
@@ -74,8 +75,10 @@ public class CompteService implements ICompteService{
 
         // création du compte
         Long rib = generationRib();
+        String numeroCompte = generationNoCompte();
         Compte compteCreate = Compte.builder()
                 .date(LocalDate.now())
+                .numeroCompte(numeroCompte)
                 .solde(compte.solde())
                 .rib(rib)
                 .utilisateur(user).build();
@@ -91,6 +94,15 @@ public class CompteService implements ICompteService{
         return 4779000000000000L + Long.parseLong(now.format(formatter));
     }
 
+    // methode de generation de numero de compte
+    private String generationNoCompte() {
+        String numero;
+        do {
+            numero = "CC" + (int)(Math.random() * 1_000_000_000);
+        } while (compteRepository.existsByNumeroCompte(numero));
+        return numero;
+    }
+
     @Override
     public boolean suppCompte(Long id) {
         Compte compte = compteRepository.findById(id).orElse(null);
@@ -104,44 +116,72 @@ public class CompteService implements ICompteService{
     }
 
     @Override
-    public void debit(Long compteId, Double montant, String description) throws CompteNotFoundException, SoldeNotSufficientException {
-        Compte compte = compteRepository.findById(compteId)
-                .orElseThrow(() -> new CompteNotFoundException("Le Compte " + compteId + " non trouvé !!!"));
-        if (compte.getSolde() < montant)
-            throw new SoldeNotSufficientException("Solde non suffisant !!!");
-        Transactions transactions = new Transactions();
-        transactions.setType(TransactionType.RETRAIT);
-        transactions.setMontant(montant);
-        transactions.setCompte(compte);
-        transactions.setDescription(description);
-        transactions.setDate(LocalDate.now());
+    public void debit(String numeroCompte, Double montant, String description, String recipientNum) throws CompteNotFoundException, SoldeNotSufficientException {
+        Compte compte = compteRepository.findByNumeroCompte(numeroCompte)
+                .orElseThrow(() -> new CompteNotFoundException("Compte non trouvé"));
+
+        Transactions transactions = Transactions.builder()
+                .compte(compte)
+                .type(TransactionType.RETRAIT)
+                .montant(montant)
+                .date(LocalDate.now())
+                .description(description)
+                .noCompteRecipient(recipientNum)
+                .status(TransactionStatus.PENDING)
+                .build();
         transactionsRepository.save(transactions);
-        compte.setSolde(compte.getSolde() - montant);
-        compteRepository.save(compte);
-        log.info("Débit de {} effectué sur le compte {}", montant, compteId);
+
+        try {
+            if (compte.getSolde() < montant)
+                throw new SoldeNotSufficientException("Solde non suffisant !!!");
+            compte.setSolde(compte.getSolde() - montant);
+            compteRepository.save(compte);
+
+            transactions.setStatus(TransactionStatus.COMPLETED);
+            transactionsRepository.save(transactions);
+        } catch (SoldeNotSufficientException e) {
+            transactions.setStatus(TransactionStatus.CANCELED);
+            transactionsRepository.save(transactions);
+            throw e;
+        }
+
+        log.info("Débit de {} effectué sur le compte {}", montant, recipientNum);
     }
 
     @Override
-    public void credit(Long compteId, Double montant, String description) throws CompteNotFoundException {
-        Compte compte = compteRepository.findById(compteId)
-                .orElseThrow(() -> new CompteNotFoundException("Le Compte " + compteId + " non trouvé !!!"));
-        Transactions transactions = new Transactions();
-        transactions.setType(TransactionType.DEPOT);
-        transactions.setMontant(montant);
-        transactions.setCompte(compte);
-        transactions.setDescription(description);
-        transactions.setDate(LocalDate.now());
+    public void credit(String numeroCompte, Double montant, String description, String recipientNum) throws CompteNotFoundException {
+        Compte compte = compteRepository.findByNumeroCompte(numeroCompte)
+                .orElseThrow(() -> new CompteNotFoundException("Compte non trouvé"));
+
+        Transactions transactions = Transactions.builder()
+                .compte(compte)
+                .type(TransactionType.DEPOT)
+                .montant(montant)
+                .date(LocalDate.now())
+                .status(TransactionStatus.COMPLETED)
+                .noCompteRecipient(recipientNum)
+                .build();
         transactionsRepository.save(transactions);
-        compte.setSolde(compte.getSolde() + montant);
-        compteRepository.save(compte);
-        log.info("Crédit de {} effectué sur le compte {}", montant, compteId);
+
+        try {
+            compte.setSolde(compte.getSolde() + montant);
+            compteRepository.save(compte);
+
+            transactions.setStatus(TransactionStatus.COMPLETED);
+            transactionsRepository.save(transactions);
+        } catch (Exception e) {
+            transactions.setStatus(TransactionStatus.CANCELED);
+            transactionsRepository.save(transactions);
+            throw e;
+        }
+        log.info("Crédit de {} effectué sur le compte {}", montant, recipientNum);
     }
 
     @Override
-    public void transfer(Long compteIdSource, Long compteIdDest, Double montant) throws CompteNotFoundException, SoldeNotSufficientException {
-        debit(compteIdSource, montant, "Transférer à " + compteIdDest);
-        credit(compteIdDest, montant, "Transférer depuis " + compteIdSource);
-        log.info("Transfet de {} de compte {} vers compte {}", montant, compteIdSource, compteIdDest);
+    public void transfer(String numeroCompteSource, String numeroCompteDest, Double montant) throws CompteNotFoundException, SoldeNotSufficientException {
+        debit(numeroCompteSource, montant, "Transférer à " + numeroCompteDest, numeroCompteDest);
+        credit(numeroCompteDest, montant, "Transférer depuis " + numeroCompteSource, numeroCompteSource);
+        log.info("Transfet de {} de compte {} vers compte {}", montant, numeroCompteSource, numeroCompteDest);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Service
 public class CompteMapper {
     public CompteResponse toResponse(Compte compte){
-        return new CompteResponse(compte.getId(), compte.getSolde(), compte.getDate(), compte.getRib());
+        return new CompteResponse(compte.getId(), compte.getNumeroCompte(), compte.getSolde(), compte.getDate(), compte.getRib());
     }
     public RibResponse toRibResponse(Compte compte){
         return new RibResponse(compte.getUtilisateur().getNom(),
