@@ -27,5 +27,4 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Long
     List<Object[]> findStatsJournalieresParCompte(@Param("compteId") Long compteId,
                                                   @Param("start") LocalDate start,
                                                   @Param("end") LocalDate end);
-
 }

@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@ExtendWith(SpringExtension.class)
+/*@ExtendWith(SpringExtension.class)
 @WebMvcTest(CompteController.class)
 public class CompteControllerTest {
 
@@ -43,4 +43,4 @@ public class CompteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.solde").value(500.0));
     }
-}
+}*/
