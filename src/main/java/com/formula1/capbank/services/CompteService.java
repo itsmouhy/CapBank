@@ -158,6 +158,7 @@ public class CompteService implements ICompteService{
                 .type(TransactionType.DEPOT)
                 .montant(montant)
                 .date(LocalDate.now())
+                .description(description)
                 .status(TransactionStatus.COMPLETED)
                 .noCompteRecipient(recipientNum)
                 .build();
@@ -191,7 +192,15 @@ public class CompteService implements ICompteService{
         Page<Transactions> transactions = transactionsRepository.findByCompteIdOrderByDateDesc(compteId, PageRequest.of(page, size));
         List<TransactionDTO> transactionDTOS = transactions.getContent()
                 .stream()
-                .map(tr -> transactionMapper.fromTransaction(tr))
+                .map(tr -> new TransactionDTO(
+                        tr.getId(),
+                        tr.getMontant(),
+                        tr.getType(),
+                        tr.getDescription(),
+                        tr.getDate(),
+                        tr.getStatus(),
+                        tr.getNoCompteRecipient()
+                ))
                 .collect(Collectors.toList());
 
         return new CompteHistoriqueDTO(
