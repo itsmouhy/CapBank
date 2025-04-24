@@ -1,12 +1,12 @@
 package com.formula1.capbank.controllers;
 
+import com.formula1.capbank.dtos.Transaction.TransactionDTO;
 import com.formula1.capbank.exceptions.TransactionNotFoundException;
 import com.formula1.capbank.services.ITransactionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -16,6 +16,13 @@ public class TransactionController {
 
     public TransactionController(ITransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    @GetMapping("/recentTransactions/{userId}")
+    public ResponseEntity<List<TransactionDTO>> getRecentTransactions(@PathVariable Long userId,
+                                                                      @RequestParam(name = "size", defaultValue = "5") int size) {
+        List<TransactionDTO> transactions = transactionService.getRecentTransactions(userId, size);
+        return ResponseEntity.ok(transactions);
     }
 
     @DeleteMapping

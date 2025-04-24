@@ -27,4 +27,13 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Long
     List<Object[]> findStatsJournalieresParCompte(@Param("compteId") Long compteId,
                                                   @Param("start") LocalDate start,
                                                   @Param("end") LocalDate end);
+
+    @Query("""
+        SELECT t
+        FROM Transactions t
+        WHERE t.compte.utilisateur.id= :userId
+        ORDER BY t.date DESC
+    """)
+    Page<Transactions> findByUserIdOrderByDateDesc(@Param("userId") Long userId,
+                                                   Pageable pageable);
 }
