@@ -17,13 +17,13 @@ public class DocumentController {
     private IDocumentService documentService;
 
     @GetMapping("/{compteId}/rib")
-    public ResponseEntity<byte[]> attestationRib(@PathVariable Long id, HttpServletRequest request,
+    public ResponseEntity<byte[]> attestationRib(@PathVariable("compteId") Long id, HttpServletRequest request,
                                                  HttpServletResponse response){
         return documentService.attestationRib(id, request, response);
     }
 
     @GetMapping("/{compteId}/relever")
-    public ResponseEntity<byte[]> releverBancaire(@PathVariable Long id, HttpServletRequest request,
+    public ResponseEntity<byte[]> releverBancaire(@PathVariable("compteId") Long id, HttpServletRequest request,
                                                  HttpServletResponse response){
         return documentService.releverBancaire(id,request,response);
     }

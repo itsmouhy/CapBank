@@ -25,7 +25,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/supprimer/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
         try {
             transactionService.deleteTransaction(id);
