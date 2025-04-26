@@ -7,8 +7,43 @@
     <title>Attestation de rib</title>
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap}"
           rel='stylesheet' type='text/css' />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">-->
 
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 2rem;
+        }
+        h1, h2 {
+            color: #48a6e0;
+            text-align: center;
+        }
+        ul {
+            list-style-type: square;
+            margin-left: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 0.5rem;
+        }
+        th {
+            background: #eee;
+        }
+        .fw-bold {
+            font-weight: 600;
+        }
+        .d-flex {
+            display: flex;
+        }
+        .justify-content-center {
+            justify-content: center;
+        }
+    </style>
 </head>
 <body class="container">
 <header>
@@ -25,7 +60,7 @@
             <li>Name Last</li>
         </ul>
         <p>
-            Attestons par la présente <span th:text="${ribResponse.nom }+' '+ ${ribResponse.prenom}"></span> détient un compte à vue ouvert sur les livres de notre agence sous le numéro : <br><span th:text="${ribResponse.rib}"></span>
+            Attestons par la présente <span th:text="${ribResponse.nom }+' '+ ${ribResponse.prenom}"></span> détient un compte à vue ouvert sur les livres de notre agence sous le numéro : <br><span th:text="${ribResponse.numeroCompte()}"></span>
         </p>
         <p>La présente attestation est délivrée a l'intéressé pour servir et valoir ce que de droit et ne saurait en aucun cas engager la responsabilité de notre établissement.</p>
         <p>Fait à Casablanca le : <span th:text="${ribResponse.date}"></span></p>
@@ -38,6 +73,6 @@
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>-->
 </body>
 </html>

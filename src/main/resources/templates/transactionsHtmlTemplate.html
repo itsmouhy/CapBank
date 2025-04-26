@@ -7,7 +7,33 @@
     <title>Attestation de rib</title>
     <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap}"
           rel='stylesheet' type='text/css' />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">-->
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 2rem;
+        }
+        h1, h2 {
+            color: #48a6e0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 0.5rem;
+        }
+        th {
+            background: #eee;
+        }
+        .fw-bold {
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body class="container">
 <header>
@@ -16,7 +42,7 @@
 <section>
     <div class="row">
         <div class="col-md-6 my-auto">
-            <h4 th:text="${compte.utilisateur.nom} +' '+${compte.utilisateur.prenom}"></h4>
+            <h4 th:text="${compte.nom} +' '+${compte.prenom}"></h4>
 
         </div>
         <div class="col-md-6">
@@ -30,7 +56,7 @@
                 <tbody>
                 <tr>
                     <th th:text="'Du '+${dateDebut}+' à '+ ${dateFin}"></th>
-                    <td th:text="${compte.rib}"></td>
+                    <td th:text="${compte.numeroCompte()}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -62,6 +88,6 @@
 </section>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>-->
 </body>
 </html>

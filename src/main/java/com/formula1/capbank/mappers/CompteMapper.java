@@ -14,6 +14,7 @@ public class CompteMapper {
     }
     public RibResponse toRibResponse(Compte compte){
         return new RibResponse(compte.getUtilisateur().getNom(),
-                compte.getUtilisateur().getPrenom(), compte.getRib(), LocalDate.now());
+                compte.getUtilisateur().getPrenom(), compte.getRib(), LocalDate.now(),
+                compte.getNumeroCompte());
     }
 }

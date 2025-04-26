@@ -10,10 +10,11 @@ import com.formula1.capbank.repositories.CompteRepository;
 import com.formula1.capbank.repositories.TransactionsRepository;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.css.resolve.DefaultCssResolver;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +69,7 @@ public class DocumentService implements IDocumentService{
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 
             ConverterProperties converterProperties = new ConverterProperties();
+
 
             converterProperties.setBaseUri("http://localhost:8080"); // needed for images/CSS
 
