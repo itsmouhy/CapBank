@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+actor Utilisateur
+
+rectangle "Application CapBank" {
+    (S'authentifier) as Login
+    (Consulter tableau de bord) as Dashboard
+    (Ouvrir un compte) as NewAccount
+    (Supprimer un compte) as DeleteAccount
+    (Voir les derniers transactions) as RecentTransactions
+    (Voir historique des transactions) as HistoryTransactions
+    (Filtrer transactions) as FilterTrs
+    (Telecharger l'historique des transactions) as DownloadTransactions
+    (Telecharger RIB) as DownloadRIB
+    (Telecharger releve bancaire) as DownloadReleve
+    (Transfert de fonds) as Transfer
+    (Payer des factures) as PaiementFacture
+    (Se deconnecter) as Logout
+
+    Utilisateur -- Login
+    Utilisateur -- Dashboard
+    Utilisateur -- NewAccount
+    Utilisateur -- DeleteAccount
+    Utilisateur -- RecentTransactions
+    Utilisateur -- HistoryTransactions
+    Utilisateur -- FilterTrs
+    Utilisateur -- DownloadTransactions
+    Utilisateur -- DownloadRIB
+    Utilisateur -- DownloadReleve
+    Utilisateur -- Transfer
+    Utilisateur -- PaiementFacture
+    Utilisateur -- Logout
+}
+
+@enduml

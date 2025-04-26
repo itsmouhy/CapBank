@@ -19,11 +19,9 @@ import java.util.stream.Collectors;
 public class TransactionService implements ITransactionService {
 
     private final TransactionsRepository transactionsRepository;
-    private final TransactionMapper transactionMapper;
 
-    public TransactionService(TransactionsRepository transactionsRepository, TransactionMapper transactionMapper) {
+    public TransactionService(TransactionsRepository transactionsRepository) {
         this.transactionsRepository = transactionsRepository;
-        this.transactionMapper = transactionMapper;
     }
 
     @Override

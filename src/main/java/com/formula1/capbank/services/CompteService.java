@@ -37,7 +37,6 @@ public class CompteService implements ICompteService{
     private final CompteMapper compteMapper;
     private final UtilisateurRepository utilisateurRepo;
     private final TransactionsRepository transactionsRepository;
-    private final TransactionMapper transactionMapper;
 
     public CompteService(CompteRepository compteRepository,
                          CompteMapper compteMapper,
@@ -48,7 +47,6 @@ public class CompteService implements ICompteService{
         this.compteMapper = compteMapper;
         this.utilisateurRepo = utilisateurRepo;
         this.transactionsRepository = transactionsRepository;
-        this.transactionMapper = transactionMapper;
     }
 
     @Override

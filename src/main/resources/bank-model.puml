@@ -1,0 +1,50 @@
+@startuml
+
+package "Entities" {
+
+  class Utilisateur {
+    - Long id
+    - String nom
+    - String prenom
+    - String email
+    - String password
+    - List<Compte> comptes
+  }
+
+  class Compte {
+    - Long id
+    - String numeroCompte
+    - Double solde
+    - LocalDate date
+    - Long rib
+    - List<Transactions> transactions
+  }
+
+  class Transactions {
+    - Long id
+    - TransactionType type
+    - Double montant
+    - LocalDate date
+    - String description
+    - TransactionStatus status
+    - String noCompteRecipient
+  }
+
+  class Facture {
+    - Long id
+    - String description
+    - Double montant
+    - LocalDate dateEmission
+    - LocalDate datePaiement
+    - Boolean estPayee
+    - TypeService typeService
+    - String fournisseur
+  }
+
+}
+
+Utilisateur "1" -- "0..*" Compte : possède >
+Compte "1" -- "0..*" Transactions : enregistre >
+Compte "1" -- "0..*" Facture : émet >
+
+@enduml
